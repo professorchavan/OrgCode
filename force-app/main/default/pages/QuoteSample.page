@@ -1,0 +1,65 @@
+<apex:page standardController="Quote" renderAs="pdf">
+    <style>
+        /* Grid centering for header */
+        .grid-center {
+            display: grid;
+            place-items: center; /* Center both horizontally and vertically */
+            text-align: center;   /* Center text inside the element */
+        }
+
+        /* Ensuring the page occupies full height for grid centering */
+        .full-page {
+            display: grid;
+            height: 100vh; /* Full viewport height */
+            place-items: center; /* Center content vertically and horizontally */
+            page-break-before: always; /* Force a page break before this section */
+        }
+
+        /* Styling for company name section */
+        .company-name {
+            text-align: right; /* Align text to the right */
+        }
+
+        /* Styling for the logo */
+        .logo {
+            height: 40px;
+            width: 70px;
+        }
+
+        /* Ensuring proper space between elements */
+        .spacer {
+            margin-bottom: 20px;
+        }
+
+        /* Ensure images don't overflow and maintain proper margins */
+        .img-container {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <!-- Page Break and Logo at the top -->
+    <div class="page-break">
+        <apex:image alt="Bio Cell LOGO" value="https://atman-e-dev-ed--c.develop.vf.force.com/resource/1732125163000/Biocell_logo?" />
+    </div>
+
+    <!-- Next section with page-break -->
+    <div class="spacer">
+        <div>
+            <apex:image style="float: left" value="https://atman-e-dev-ed--c.develop.vf.force.com/resource/1732128545000/Biocellheader?" />
+        </div>
+
+        <!-- Client UID Section -->
+        <div style="float: right" class="company-name">Client UID :______________</div>
+    </div>
+
+    <!-- Center the "ANNEXURE" and "ENROLMENT FORM" -->
+    <div class="full-page">
+        <div class="grid-center">
+            <h3>ANNEXURE - 1</h3>
+            <h3>ENROLMENT FORM</h3>
+        </div>
+    </div>
+ <div style="opacity: {opacityValue};">
+        This is a box with dynamic opacity.
+    </div>
+</apex:page>

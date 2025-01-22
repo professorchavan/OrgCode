@@ -1,0 +1,23 @@
+<template>
+    <div class="container">
+        <h1>Search Account by Speech</h1>
+        <button onclick={handleSearch} disabled={isListening}>Click and Speak</button>
+        <template if:true={isListening}>
+            <p>Listening...</p>
+        </template>
+        <template if:true={errorMessage}>
+            <p class="error">{errorMessage}</p>
+        </template>
+        <template if:true={accountList.length}>
+            <h2>Found Accounts</h2>
+            <ul>
+                <template for:each={accountList} for:item="account">
+                    <li key={account.Id}>{account.Name}</li>
+                </template>
+            </ul>
+        </template>
+        <template if:false={accountList.length}>
+            <p>No accounts found.</p>
+        </template>
+    </div>
+</template>
