@@ -14,16 +14,6 @@ pipeline {
 
         
 
-        stage('Deploy to Salesforce Org') {
-            steps {
-                script {
-                    // Deploy metadata to Salesforce org
-                    sh 'sfdx force:source:deploy -p force-app/main/default -u employees@atman.in --testlevel RunLocalTests --verbose'
-                }
-            }
-        }
-    }
-
     post {
         success {
             echo 'Deployment successful!'
