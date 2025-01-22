@@ -12,20 +12,13 @@ pipeline {
             }
         }
 
-        stage('Check Salesforce CLI Version') {
-            steps {
-                script {
-                    // Check Salesforce CLI version if installed
-                    sh 'sfdx --version'
-                }
-            }
-        }
+        
 
         stage('Deploy to Salesforce Org') {
             steps {
                 script {
                     // Deploy metadata to Salesforce org
-                    sh 'sfdx force:source:deploy -p force-app/main/default -u ProdOrg --testlevel RunLocalTests --verbose'
+                    sh 'sfdx force:source:deploy -p force-app/main/default -u employees@atman.in --testlevel RunLocalTests --verbose'
                 }
             }
         }
