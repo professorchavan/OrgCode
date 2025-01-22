@@ -1,42 +1,31 @@
 pipeline {
     agent any
-
+    
     environment {
-        // Salesforce Org 1 credentials (GitHub secrets or Jenkins credentials)
-        SF_USERNAME_ORG1 = credentials('Mule@atman.sandbox')  // Org 1 Salesforce username
-        SF_USERNAME_ORG2 = credentials('employees@atman.in')  // Org 2 Salesforce username
+        SF_USERNAME = credentials('Mule@atman.sandbox')  // You can keep this environment variable if you plan to use it in some other step
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                checkout scm  // Pull latest changes from GitHub
+                git credentialsId: 'Github_orgCode', url: 'https://github.com/professorchavan/OrgCode.git'
             }
         }
 
-        stage('Deploy to Org 1') {
+        stage('Check Salesforce CLI Version') {
             steps {
                 script {
-                    // Deploy changes to Org 1 (Salesforce CLI)
-                    sh 'sfdx force:source:deploy -p force-app/main/default -u $SF_USERNAME_ORG1'
+                    // Check Salesforce CLI version if installed
+                    sh 'sfdx --version'
                 }
             }
         }
 
-        stage('Approval') {
+        stage('Deploy to Salesforce Org') {
             steps {
                 script {
-                    // Wait for manual approval before deploying to Org 2
-                    input message: 'Approve deployment to Org 2?', ok: 'Approve'
-                }
-            }
-        }
-
-        stage('Deploy to Org 2') {
-            steps {
-                script {
-                    // Deploy changes to Org 2 (Salesforce CLI)
-                    sh 'sfdx force:source:deploy -p force-app/main/default -u $SF_USERNAME_ORG2'
+                    // Deploy metadata to Salesforce org
+                    sh 'sfdx force:source:deploy -p force-app/main/default -u ProdOrg --testlevel RunLocalTests --verbose'
                 }
             }
         }
